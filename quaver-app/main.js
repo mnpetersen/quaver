@@ -2,7 +2,7 @@ var app = require('app');  // Module to control application life.
 var BrowserWindow = require('browser-window');  // Module to create native browser window.
 
 // Report crashes to our server.
-//require('crash-reporter').start();
+require('crash-reporter').start();
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the javascript object is GCed.
@@ -13,6 +13,8 @@ app.on('window-all-closed', function() {
   if (process.platform != 'darwin')
     app.quit();
 });
+
+console.log(__dirname);
 
 // This method will be called when atom-shell has done everything
 // initialization and ready for creating browser windows.

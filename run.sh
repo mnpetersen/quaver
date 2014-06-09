@@ -9,4 +9,4 @@ pushd "${DIR}/build"
 	grunt download-atom-shell
 popd
 
-"${DIR}/build/atom-shell/Atom.app/Contents/MacOS/Atom" "${DIR}/hello-app" 
+"${DIR}/build/atom-shell/Atom.app/Contents/MacOS/Atom" "${DIR}/quaver-app"

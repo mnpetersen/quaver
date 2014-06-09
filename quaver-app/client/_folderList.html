@@ -1,0 +1,12 @@
+<div id="nav" class="">
+    <div class="nav-inner">
+        <button type="button" class="btn btn-primary">New Note</button>
+        <div class="">
+            <ul>
+                <li><a href="#" ng-click="tagSelected(null)">All <span class="email-count"></span></a></li>
+                <li ng-repeat="tag in tags"><a href="#" ng-click="tagSelected(tag)">{{tag}}<span class="email-count"></span></a></li>
+
+            </ul>
+        </div>
+    </div>
+</div>
