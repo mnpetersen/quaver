@@ -12,13 +12,13 @@
 
     <script type="text/javascript" src="bower_components/lodash/dist/lodash.js"></script>
     <script>
-        window.$ = window.jQuery = require("./bower_components/jquery/dist/jquery.js");
+//        window.$ = window.jQuery = require("./bower_components/jquery/dist/jquery.js");
     </script>
     <script type="text/javascript" src="bower_components/angular/angular.js"></script>
-    <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <!--<script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.js"></script>-->
     <script type="text/javascript" src="bower_components/angular-bootstrap/ui-bootstrap.js"></script>
     <script type="text/javascript" src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-    <script type="text/javascript" src="bower_components/angular-ui-ace/ui-ace.js"></script>
+    <script type="text/javascript" src="bower_components/textile-js/lib/textile.js"></script>
 
     <script src="js/mainPage.js"></script>
     <script src="js/noteStore.js"></script>
@@ -28,7 +28,7 @@
 
 <div id="layout" class="container-fluid">
 
-    <div class="row">
+    <div id="app-header" class="row">
         <div class="col-md-12">
             <ng-include src="'_header.html'"></ng-include>
         </div>
@@ -38,10 +38,10 @@
         <div class="col-md-2">
             <ng-include src="'_folderList.html'"></ng-include>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <ng-include src="'_noteList.html'"></ng-include>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-7">
             <ng-include src="'_noteEditor.html'"></ng-include>
         </div>
     </div>

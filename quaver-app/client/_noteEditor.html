@@ -1,5 +1,5 @@
 <div id="main" class="">
-    <div class="" >
+    <div class="">
         <div class="">
             <div class="">
                 <h1 class="">{{selectedNote.title}}</h1>
@@ -13,8 +13,25 @@
         </div>
 
 
-        <div class="">
-            {{selectedNote.markdown}}
-        </div>
+        <tabset>
+            <tab heading="Markup">
+                <div class="well">
+                    <textarea ng-model="selectedNote.markdown" style="width: 100%; height:350px">
+                        {{selectedNote.markdown}}
+                    </textarea>
+                </div>
+            </tab>
+            <tab heading="Preview">
+                <div class="well">
+                    {{
+                    textile(selectedNote.markdown)
+                    }}
+                </div>
+
+
+            </tab>
+        </tabset>
     </div>
+
+    <button class="btn btn-success">Save</button>
 </div>

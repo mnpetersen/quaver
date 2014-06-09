@@ -1,4 +1,4 @@
-var quverApp = angular.module('quaver', ["noteStoreServices"]);
+var quverApp = angular.module('quaver', ["noteStoreServices",'ui.bootstrap']);
 
 quverApp.controller('MainPageCtrl', ["$scope", "NoteStore", function ($scope, NoteStore) {
 
