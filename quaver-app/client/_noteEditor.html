@@ -1,37 +1,22 @@
 <div id="main" class="">
-    <div class="">
-        <div class="">
-            <div class="">
-                <h1 class="">{{selectedNote.title}}</h1>
 
-                <p class="">
-                    <a>Tilo Mitra</a> at <span>3:56pm, April 3, 2012</span>
-                </p>
-            </div>
-
+    <div class="well" ng-show="selectedNote">
+        <div ng-show="!editMode" ng-click="editMode=true">
+            {{selectedNote.title}}
+            <br/>
+            <div ng-bind-html="selectedNoteRendered"></div>
 
         </div>
 
+        <div ng-show="editMode">
+            <input ng-model="selectedNote.title" class="form-control"></input>
+            <br/>
+            <textarea ng-model="selectedNote.markdown" class="form-control"
+                      ng-change="noteContentsChanged()" style="height:400px">
 
-        <tabset>
-            <tab heading="Markup">
-                <div class="well">
-                    <textarea ng-model="selectedNote.markdown" style="width: 100%; height:350px">
-                        {{selectedNote.markdown}}
-                    </textarea>
-                </div>
-            </tab>
-            <tab heading="Preview">
-                <div class="well">
-                    {{
-                    textile(selectedNote.markdown)
-                    }}
-                </div>
-
-
-            </tab>
-        </tabset>
+            </textarea>
+        </div>
     </div>
 
-    <button class="btn btn-success">Save</button>
+
 </div>

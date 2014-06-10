@@ -6,12 +6,12 @@ noteStoreServices.factory('NoteStore', ["$q",function($q){
     var stubData = [
         {
             tags: "foo bar baz",
-            markdown: "",
+            markdown: "h1. Foo \nbar bar\* asdf",
             title: "asdfds"
         } ,
         {
             tags: "foo bar baz",
-            markdown: "",
+            markdown: "h2. Foo \nbar bar\* asdf",
             title: "asdfdsf 22 asdf"
         }
     ];
@@ -38,6 +38,16 @@ noteStoreServices.factory('NoteStore', ["$q",function($q){
             },100);
 
             return defer.promise;
+        },
+
+        newNote : function() {
+            var note = {
+                title:"",
+                markdown:"",
+                tags:""
+            }
+            stubData.push(note);
+            return note;
         }
     }
 }]) ;

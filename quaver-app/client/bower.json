@@ -20,6 +20,7 @@
     "angular-bootstrap": "~0.11.0",
     "bootstrap": "~3.1.1",
     "lodash": "~2.4.1",
-    "textile-js": "*"
+    "textile-js": "*",
+    "font-awesome-css": "~4.0.3"
   }
 }
