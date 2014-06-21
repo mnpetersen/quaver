@@ -9,5 +9,5 @@ pushd "${DIR}/build"
 	grunt download-atom-shell
 popd
 
-"${DIR}/build/atom-shell-darwin/Atom.app/Contents/MacOS/Atom" "${DIR}/app"
-#"${DIR}/build/atom-shell-linux/atom" "${DIR}/app"
+#"${DIR}/build/atom-shell-darwin/Atom.app/Contents/MacOS/Atom" "${DIR}/app"
+"${DIR}/build/atom-shell-linux/atom" "${DIR}/app"

@@ -1,0 +1,48 @@
+<div id="noteEditor" ng-controller="NoteEditCtrl">
+    <div ng-show="!editMode" ng-click="edit()">
+        {{selectedNote.title()}}
+        <p/>
+        <hr/>
+        <div ng-bind-html="selectedNote.rendered"></div>
+
+    </div>
+
+    <div ng-show="editMode">
+
+
+        <div class="container-fluid">
+            <div class="row">
+
+                <div class="col-xs-6">
+                    <input ng-model="selectedNote.edit.title" class="form-control" ng-change="noteContentsChanged()"></input>
+                    <p/>
+                </div>
+                <div class="col-xs-6">
+                    <strong>{{selectedNote.title()}}</strong>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-xs-6">
+                    <textarea ng-model="selectedNote.edit.markup"
+                              class="form-control"
+                              focus-on="noteContents"
+                              ng-change="noteContentsChanged()"
+                              style="height:400px;">
+                    </textarea>
+                    <a href="#" ng-click="showTextileReference()">Textile Reference</a>
+                </div>
+                <div class="col-xs-6">
+                    <div
+                         style="height:400px;"
+                            ng-bind-html="selectedNote.rendered">
+
+                     </div>
+                </div>
+
+        </div>
+    </div>
+</div>
+
+

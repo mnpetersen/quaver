@@ -1,16 +1,14 @@
-<nav class="navbar navbar-default" role="navigation">
+<nav class="navbar navbar-inverse hidden-xs" role="navigation">
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
-            <a class="fa fa-music navbar-brand hidden-xs" href="#"> Quaver</a>
-
+            <a class="fa fa-music navbar-brand" href="#"> Quaver</a>
         </div>
+        <a class="btn btn-default navbar-btn pull-right" href="#" ng-click="showDevTools()"><i class="fa fa-cog"></i></a>
+        <a class="btn btn-default navbar-btn pull-right" href="#" ng-click="reload()"><i class="fa fa-refresh"></i></a>
 
-        <button type="button" class="btn btn-success navbar-btn" ng-click="newNote()">New Note</button>
-        <div class="col-sm-6 col-md-6 pull-right">
-
+        <div class="col-sm-6 pull-right">
             <form class="navbar-form in" role="search">
-
                 <div class="input-group">
                     <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
                     <div class="input-group-btn">
@@ -20,9 +18,7 @@
                 </div>
             </form>
         </div>
-
-
+        <button type="button" class="btn btn-success navbar-btn pull-right" ng-click="newNote()">New Note</button>
     </div>
-    <!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
+    </div>
 </nav>
