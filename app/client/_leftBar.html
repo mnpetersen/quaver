@@ -1,7 +1,10 @@
-
 <div id="tab-bar">
     <ul id="tab">
-        <li ng-repeat="tab in leftTabs" ng-click="leftTabSelected(tab)"><a href="#"><i class="fa {{tab.icon}}"></i>&nbsp;{{tab.text}}</a></li>
+        <li ng-repeat="tab in leftTabs"
+            ng-click="leftTabSelected(tab)"
+            class="{{isSelectedLeft(tab) ? 'selected' : ''}}">
+            <a href="#"><i class="fa {{tab.icon}}"></i>&nbsp;{{tab.text}}</a>
+        </li>
     </ul>
 </div>
 <div id="tab-content" ng-show="isLeftBarExpanded()">

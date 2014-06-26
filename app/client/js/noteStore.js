@@ -20,6 +20,7 @@ var Note = function (json) {
             on: ""
         },
         tags: ""
+
     }, json);
 
     if (content.id === "") {
@@ -72,6 +73,19 @@ var Note = function (json) {
         return content.created.on;
     }
 
+    function trash()
+    {
+        content.deleted = true;
+    }
+
+    function undelete() {
+        delete content.delete;
+    }
+
+    function trash() {
+        return content.deleted === true;
+    }
+
     function data() {
         return angular.copy(content);
     }
@@ -91,7 +105,10 @@ var Note = function (json) {
         id: id,
         revision: revision,
         createdOn: createdOn,
-        data: data
+        data: data,
+        delete: trash,
+        restore: undelete,
+        deleted: deleted
     }
 
 }
@@ -101,7 +118,7 @@ noteStoreServices.factory('NoteStore', ["$q", function ($q) {
     function NoteStore() {
         EventEmitter.call(this);
     };
-    util.inherits(NoteStore,EventEmitter);
+    util.inherits(NoteStore, EventEmitter);
 
     NoteStore.prototype.saveNote = function (note) {
         var defered = $q.defer();
@@ -125,6 +142,11 @@ noteStoreServices.factory('NoteStore', ["$q", function ($q) {
                 });
         }
         return defered.promise;
+    }
+
+    NoteStore.prototype.deleteNote = function (note) {
+        note.delete();
+        return this.saveNote(note);
     }
 
     NoteStore.prototype.allNotes = function () {

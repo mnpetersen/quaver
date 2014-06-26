@@ -1,0 +1,14 @@
+{
+  "name": "textile-js",
+  "homepage": "https://github.com/borgar/textile-js",
+  "_release": "27f08df84e",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "27f08df84e746b7320494bbc38551dc63359900c"
+  },
+  "_source": "git://github.com/borgar/textile-js.git",
+  "_target": "*",
+  "_originalSource": "textile-js",
+  "_direct": true
+}

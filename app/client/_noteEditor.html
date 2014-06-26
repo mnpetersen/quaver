@@ -1,48 +1,24 @@
-<div id="noteEditor" ng-controller="NoteEditCtrl">
-    <div ng-show="!editMode" ng-click="edit()">
-        {{selectedNote.title()}}
-        <p/>
-        <hr/>
-        <div ng-bind-html="selectedNote.rendered"></div>
+<div id="noteEditor" ng-controller="NoteEditCtrl" ng-show="selectedNote != null">
 
+    <div class="input-group" style="margin-bottom: 15px;">
+        <input class="form-control input-lg"
+               ng-readOnly="selectedNote == null"
+               ng-model="selectedNote.edit.title"
+               ng-change="noteChanged()"
+               style="margin-top: 0px; margin-bottom: 2px; border:0px"/>
+        <a
+                class="input-group-addon "
+                href="#" ng-click="reload()"><i class="fa fa-trash-o"> Delete</i></a>
     </div>
 
-    <div ng-show="editMode">
+
+    <p/>
+
+    <textarea id="editor" style="width: 100%; height: 100%">
+
+    </textarea>
 
 
-        <div class="container-fluid">
-            <div class="row">
-
-                <div class="col-xs-6">
-                    <input ng-model="selectedNote.edit.title" class="form-control" ng-change="noteContentsChanged()"></input>
-                    <p/>
-                </div>
-                <div class="col-xs-6">
-                    <strong>{{selectedNote.title()}}</strong>
-                </div>
-            </div>
-
-            <div class="row">
-
-                <div class="col-xs-6">
-                    <textarea ng-model="selectedNote.edit.markup"
-                              class="form-control"
-                              focus-on="noteContents"
-                              ng-change="noteContentsChanged()"
-                              style="height:400px;">
-                    </textarea>
-                    <a href="#" ng-click="showTextileReference()">Textile Reference</a>
-                </div>
-                <div class="col-xs-6">
-                    <div
-                         style="height:400px;"
-                            ng-bind-html="selectedNote.rendered">
-
-                     </div>
-                </div>
-
-        </div>
-    </div>
 </div>
 
 

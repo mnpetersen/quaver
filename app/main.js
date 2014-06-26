@@ -1,6 +1,7 @@
 var app = require('app');  // Module to control application life.
 var BrowserWindow = require('browser-window');  // Module to create native browser window.
 var ipc = require('ipc');
+var screen = require('screen');
 
 // Report crashes to our server.
 require('crash-reporter').start();
@@ -19,13 +20,15 @@ app.on('window-all-closed', function () {
         app.quit();
 });
 
+var display = screen.getPrimaryDisplay();
+
 // This method will be called when atom-shell has done everything
 // initialization and ready for creating browser windows.
 app.on('ready', function () {
     // Create the browser window.
     windows.mainWindow = new BrowserWindow({
-        width: 800,
-        height: 600,
+        width: display.workArea.width,
+        height: display.workArea.height,
         "min-width": 768,
         "min-height": 500
     });

@@ -1,5 +1,5 @@
 
-var quaverApp = angular.module('quaver', ["noteStoreServices", 'ui.bootstrap']);
+var quaverApp = angular.module('quaver', ["noteStoreServices",  'ui.bootstrap']);
 
 //
 // See http://stackoverflow.com/questions/14833326/how-to-set-focus-in-angularjs

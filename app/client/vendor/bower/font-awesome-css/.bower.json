@@ -1,0 +1,38 @@
+{
+  "name": "font-awesome-css",
+  "description": "Font Awesome CSS only",
+  "version": "4.0.3",
+  "keywords": [
+    "fonts",
+    "css"
+  ],
+  "homepage": "http://fontawesome.io",
+  "dependencies": {},
+  "development": {},
+  "license": "SIL, MIT, CC BY 3.0",
+  "main": [
+    "./css/font-awesome.css",
+    "./fonts/*"
+  ],
+  "ignore": [
+    "*/.*",
+    "*.json",
+    "src",
+    "scss",
+    "less",
+    "*.yml",
+    "Gemfile",
+    "Gemfile.lock",
+    "*.md"
+  ],
+  "_release": "4.0.3",
+  "_resolution": {
+    "type": "version",
+    "tag": "v4.0.3",
+    "commit": "f7f60f552a04b730f692a2107e5f6cfbddbc22a4"
+  },
+  "_source": "git://github.com/jbranchaud/font-awesome-css.git",
+  "_target": "~4.0.3",
+  "_originalSource": "font-awesome-css",
+  "_direct": true
+}

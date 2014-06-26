@@ -1,4 +1,16 @@
 
+html {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+body {
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+}
+
 #layout {
     padding-left: 0px;
     padding-right: 0px;
@@ -21,7 +33,6 @@
     bottom:20px;
     right:5px;
     /*background-color: red;*/
-    padding-top:5px;
 }
 
 #content.expanded {
@@ -66,14 +77,22 @@
     height: 30px;
     border-right: 2px;
 }
+
 #tab li a {
     display: block;
     padding: 10px;
     font-family: Arial, sans-serif;
-    font-weight: bold;
     text-decoration: none;
-
 }
+
+#tab li.selected {
+    border: 1px solid black;
+}
+#tab li.selected a {
+    font-weight: bold;
+}
+
+
 
 #tab-content {
     position:fixed;

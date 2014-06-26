@@ -15,19 +15,22 @@ quaverApp.controller('LayoutCtrl', ["$scope", "focus", function ($scope, $sce) {
             text:"Tags",
             icon : "fa-tags",
             include : "_tabList.html"
+        },
+        {
+            id:"trashlist",
+            idx:3,
+            text:"Trash",
+            icon : "fa-trash-o",
+            include : "_tabList.html"
         }
     ];
 
 
     $scope.leftTabs = _.sortBy(leftTabs,function(t) {return (-t.idx)});
 
-    $scope.leftBarExpanded =false;
+    $scope.leftBarExpanded =true;
     $scope.rightBarExpanded = false;
-    $scope.selectedLeftTab = null;
-
-    $scope.showTextileReference = function() {
-        ipc.send('show-textile-help');
-    }
+    $scope.selectedLeftTab = leftTabs[0];
 
     function toggleLeft() {
         $scope.leftBarExpanded = !$scope.leftBarExpanded;
