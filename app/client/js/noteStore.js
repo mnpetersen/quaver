@@ -82,7 +82,7 @@ var Note = function (json) {
         delete content.delete;
     }
 
-    function trash() {
+    function deleted() {
         return content.deleted === true;
     }
 

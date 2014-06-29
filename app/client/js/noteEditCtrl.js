@@ -5,6 +5,7 @@ var ipc = require('ipc');
 
 quaverApp.controller('NoteEditCtrl', ["$scope", "NoteStore", "$sce", "focus", function ($scope, NoteStore, $sce, focus) {
 
+    "use strict";
 
     var editor = CKEDITOR.replace("editor", {
         toolbar: [
@@ -15,6 +16,47 @@ quaverApp.controller('NoteEditCtrl', ["$scope", "NoteStore", "$sce", "focus", fu
             { name: 'links', items: [ 'Link', 'Image' ] },
             { name: 'clipboard', items: [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ] }
         ]
+    });
+
+    //used to get keysrtroke based shortcuts
+    var shortcuts = [
+        {   rexp: /\*/,
+            fn: function () {
+                editor.execCommand('bulletedlist');
+            }},
+        {
+            rexp: /\d*\./,
+            fn: function () {
+                editor.execCommand('numberedlist');
+            }
+        }
+    ];
+
+
+    editor.on('key', function (evt) {
+
+        //32 == ''
+        if (evt.data.keyCode === 32) {
+            var range = editor.getSelection().getRanges()[0],
+                node = range.startContainer;
+
+            if (node.type === CKEDITOR.NODE_TEXT && range.startOffset) {
+                var text = node.getText().substring(0, range.startOffset);
+                shortcuts.every(function(sc) {
+                    if (sc.rexp.test(text)) {
+                        node.setText(node.getText().substring(range.startOffset));
+                        sc.fn();
+                        return false;
+                    }
+                    return true;
+                });
+
+
+
+            }
+
+        }
+
     });
 
 

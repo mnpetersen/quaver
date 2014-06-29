@@ -68,14 +68,14 @@ body {
     height: 32px;
     -webkit-transform-origin: 0 0;
     transform-origin: 0 0;
-    -webkit-transform: rotate(-90deg) translate(-180px, 0px);
+    -webkit-transform: rotate(-90deg) translate(-270px, 0px);
 
 }
 #tab li {
     float: left;
     width: 90px;
     height: 30px;
-    border-right: 2px;
+    border-right: 5px;
 }
 
 #tab li a {
@@ -86,7 +86,7 @@ body {
 }
 
 #tab li.selected {
-    border: 1px solid black;
+    background-color: black;
 }
 #tab li.selected a {
     font-weight: bold;
@@ -103,6 +103,7 @@ body {
     width:270px;
     padding-left:2px;
     padding-right:5px;
+    margin-left:5px;
     overflow-y: scroll;
 
 }
