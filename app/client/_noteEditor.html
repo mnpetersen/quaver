@@ -1,15 +1,13 @@
 <div id="noteEditor" ng-controller="NoteEditCtrl" ng-show="selectedNote != null">
 
-    <div class="input-group" style="margin-bottom: 15px;">
-        <input class="form-control input-lg"
-               ng-readOnly="selectedNote == null"
-               ng-model="selectedNote.edit.title"
-               ng-change="noteChanged()"
-               style="margin-top: 0px; margin-bottom: 2px; border:0px"/>
-        <a
-                class="input-group-addon "
-                href="#" ng-click="reload()"><i class="fa fa-trash-o"> Delete</i></a>
-    </div>
+    <a class="btn btn-warning pull-right"
+       href="#" ng-click="deleteCurrentNote()"><i class="fa fa-trash-o"> Delete</i></a>
+
+    <input class="form-control input-lg"
+           ng-readOnly="selectedNote == null"
+           ng-model="selectedNote.edit.title"
+           ng-change="noteChanged()"
+           style="width:auto; margin-top: 0px; margin-bottom: 2px; border:0px"/>
 
 
     <p/>

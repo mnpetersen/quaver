@@ -96,6 +96,13 @@ quaverApp.controller('NoteEditCtrl', ["$scope", "NoteStore", "$sce", "focus", fu
 
     $scope.noteChanged = noteChanged;
 
+    $scope.deleteCurrentNote = function() {
+        if ($scope.selectedNote == null) {
+            return;
+        }
+        return NoteStore.deleteNote($scope.selectedNote);
+    }
+
 
     editor.on('change', function () {
         noteChanged();

@@ -1,9 +1,9 @@
-quaverApp.controller('NoteListCtrl', ["$scope", "NoteStore", "$sce", "focus", "$rootScope", function ($scope, NoteStore, $sce,focus,$rootScope) {
+quaverApp.controller('NoteListCtrl', ["$scope", "NoteStore", "$sce", "focus", "$rootScope", function ($scope, NoteStore, $sce, focus, $rootScope) {
 
 
     $scope.notes = [];
     $scope.tags = [];
-    $scope.selectedNote=null;
+    $scope.selectedNote = null;
 
     refresh();
     function refresh() {
@@ -12,19 +12,37 @@ quaverApp.controller('NoteListCtrl', ["$scope", "NoteStore", "$sce", "focus", "$
         });
     }
 
-    NoteStore.on('new-note',function(note) {
-        refresh().then(function() {
+    NoteStore.on('new-note', function (note) {
+        refresh().then(function () {
             $scope.noteSelected(note);
-        })
+        });
     })
+
+    NoteStore.on('save-note', function (note) {
+        refresh().then(function callback() {
+            $scope.noteSelected(note);
+        });
+    });
+
+    NoteStore.on('delete-note', function (note) {
+        refresh().then(function () {
+            $scope.noteSelected(null);
+        });
+    });
+
 
     $scope.noteSelected = function (note) {
         $scope.selectedNote = note;
         $rootScope.$broadcast("note-selected", note);
     }
 
+    $scope.renderHtml = function (note) {
+
+        return $sce.trustAsHtml(note.markup());
+    };
+
     $scope.newNote = function () {
-        var note = NoteStore.newNote().then(function(note) {
+        var note = NoteStore.newNote().then(function (note) {
             refresh();
             $scope.noteSelected(note);
             $scope.edit();

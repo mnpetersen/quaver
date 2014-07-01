@@ -7,8 +7,8 @@
             <h3 class="panel-title">{{note.title()}}</h3>
             {{note.createdOn()}}
         </div>
-        <div class="panel-body">
-            {{note.markup()}}
+        <div class="panel-body" ng-bind-html="renderHtml(note)">
+
         </div>
     </div>
 

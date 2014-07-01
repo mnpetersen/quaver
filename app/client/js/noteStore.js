@@ -73,8 +73,7 @@ var Note = function (json) {
         return content.created.on;
     }
 
-    function trash()
-    {
+    function trash() {
         content.deleted = true;
     }
 
@@ -109,9 +108,10 @@ var Note = function (json) {
         delete: trash,
         restore: undelete,
         deleted: deleted
-    }
+    };
 
 }
+
 noteStoreServices.factory('NoteStore', ["$q", function ($q) {
     var db = new PouchDb("quaver");
 
@@ -146,19 +146,32 @@ noteStoreServices.factory('NoteStore', ["$q", function ($q) {
 
     NoteStore.prototype.deleteNote = function (note) {
         note.delete();
-        return this.saveNote(note);
+        var self = this;
+        return this.saveNote(note)
+            .then(function events() {
+                self.emit("delete-note", note);
+            });
     }
 
     NoteStore.prototype.allNotes = function () {
+
         var defered = $q.defer();
-        db.allDocs({
-            include_docs: true
-        }, function (err, response) {
-            var notes = _.map(response.rows, function (row) {
-                return Note(row.doc);
+
+        var live = function (doc, emit) {
+            if (!doc.deleted) {
+                emit(doc);
+            }
+        };
+        db.query(live, {
+                include_docs: true
+            },
+            function (err, response) {
+                var notes = _.map(response.rows, function (row) {
+                    return Note(row.doc);
+                });
+                defered.resolve(notes);
             });
-            defered.resolve(notes);
-        });
+
 
         return defered.promise;
     }
