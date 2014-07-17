@@ -1,29 +1,35 @@
-var textile = require("./vendor/bower/textile-js/lib/textile.js");
 var remote = require('remote');
-var ipc = require('ipc');
 
 
 quaverApp.controller('NoteEditCtrl', ["$scope", "NoteStore", "$sce", "focus", function ($scope, NoteStore, $sce, focus) {
 
     "use strict";
 
-    var editor = CKEDITOR.replace("editor", {
-        toolbar: [
+    CKEDITOR.disableAutoInline = true;
+    var editor = CKEDITOR.inline(document.getElementById("editor"), {
+        extraPlugins: 'sharedspace',
 
-            { name: 'basicstyles', items: ['Format', 'Styles', 'Bold', 'Italic', 'Underline', 'Strike' ] },
-            { name: 'lists', items: [ 'NumberedList', 'BulletedList', 'Indent', 'Outdent' ] },
-            { name: 'form', items: [ 'Checkbox', 'Textarea', 'Table' ] },
-            { name: 'links', items: [ 'Link', 'Image' ] },
-            { name: 'clipboard', items: [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ] }
+        sharedSpaces: {
+            top: 'editorToolbar'
+        },
+        toolbar: [
+            {name: 'basicstyles', items: ['Format', 'Styles', 'Bold', 'Italic', 'Underline', 'Strike' ]},
+            {name: 'lists', items: [ 'NumberedList', 'BulletedList', 'Indent', 'Outdent' ]},
+            {name: 'form', items: [ 'Checkbox', 'Textarea', 'Table' ]},
+            {name: 'links', items: [ 'Link', 'Image' ]}
         ]
+
     });
+
 
     //used to get keysrtroke based shortcuts
     var shortcuts = [
-        {   rexp: /\*/,
+        {
+            rexp: /\*/,
             fn: function () {
                 editor.execCommand('bulletedlist');
-            }},
+            }
+        },
         {
             rexp: /\d*\./,
             fn: function () {
@@ -31,6 +37,16 @@ quaverApp.controller('NoteEditCtrl', ["$scope", "NoteStore", "$sce", "focus", fu
             }
         }
     ];
+
+    editor.on('focus', function () {
+        editor.setReadOnly(false);
+        $scope.$apply("toolbarVisible = true");
+    });
+
+    editor.on('blur', function () {
+        console.log("blur");
+        $scope.$apply("toolbarVisible = false");
+    });
 
 
     editor.on('key', function (evt) {
@@ -42,7 +58,7 @@ quaverApp.controller('NoteEditCtrl', ["$scope", "NoteStore", "$sce", "focus", fu
 
             if (node.type === CKEDITOR.NODE_TEXT && range.startOffset) {
                 var text = node.getText().substring(0, range.startOffset);
-                shortcuts.every(function(sc) {
+                shortcuts.every(function (sc) {
                     if (sc.rexp.test(text)) {
                         node.setText(node.getText().substring(range.startOffset));
                         sc.fn();
@@ -50,7 +66,6 @@ quaverApp.controller('NoteEditCtrl', ["$scope", "NoteStore", "$sce", "focus", fu
                     }
                     return true;
                 });
-
 
 
             }
@@ -62,6 +77,7 @@ quaverApp.controller('NoteEditCtrl', ["$scope", "NoteStore", "$sce", "focus", fu
 
     $scope.selectedNote = null;
     $scope.selectedNoteRendered = null;
+    $scope.toolbarVisible = false;
 
     $scope.edit = function () {
         $scope.editMode = true;
@@ -74,7 +90,23 @@ quaverApp.controller('NoteEditCtrl', ["$scope", "NoteStore", "$sce", "focus", fu
         $scope.selectedNote.edit = {
             title: note.title()
         }
-        editor.setData(note.markup());
+
+        //stop this change from triggering a save of the new data.
+        disableSave();
+//        editor.setData(note.markup());
+        document.getElementById("editor").innerHTML = note.markup();
+        document.getElementById("editor").contentEditable = true;
+
+    }
+
+    var saveData = true;
+
+    function disableSave() {
+        saveData = false;
+    }
+
+    function enableSave() {
+        saveData = true;
     }
 
     $scope.$on("note-selected", function (e, note) {
@@ -96,7 +128,7 @@ quaverApp.controller('NoteEditCtrl', ["$scope", "NoteStore", "$sce", "focus", fu
 
     $scope.noteChanged = noteChanged;
 
-    $scope.deleteCurrentNote = function() {
+    $scope.deleteCurrentNote = function () {
         if ($scope.selectedNote == null) {
             return;
         }
@@ -105,8 +137,13 @@ quaverApp.controller('NoteEditCtrl', ["$scope", "NoteStore", "$sce", "focus", fu
 
 
     editor.on('change', function () {
-        noteChanged();
+        if (saveData) {
+            noteChanged();
+        } else {
+            enableSave();
+        }
     });
 
 
-}]);
+}])
+;

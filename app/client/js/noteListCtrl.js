@@ -4,11 +4,17 @@ quaverApp.controller('NoteListCtrl', ["$scope", "NoteStore", "$sce", "focus", "$
     $scope.notes = [];
     $scope.tags = [];
     $scope.selectedNote = null;
+    $scope.notebooks = [];
+    $scope.selectedNotebook = null;
 
     refresh();
+
     function refresh() {
-        return NoteStore.allNotes().then(function (allNotes) {
+        NoteStore.allNotes().then(function (allNotes) {
             $scope.notes = allNotes;
+        });
+        NoteStore.notebooks().then(function (notebooks) {
+            $scope.notebooks = notebooks;
         });
     }
 
@@ -16,7 +22,7 @@ quaverApp.controller('NoteListCtrl', ["$scope", "NoteStore", "$sce", "focus", "$
         refresh().then(function () {
             $scope.noteSelected(note);
         });
-    })
+    });
 
     NoteStore.on('save-note', function (note) {
         refresh().then(function callback() {
@@ -25,29 +31,32 @@ quaverApp.controller('NoteListCtrl', ["$scope", "NoteStore", "$sce", "focus", "$
     });
 
     NoteStore.on('delete-note', function (note) {
-        refresh().then(function () {
+        if ($scope.selectedNote === note) {
             $scope.noteSelected(null);
-        });
+        }
+        refresh();
     });
 
 
     $scope.noteSelected = function (note) {
+        if ($scope.selectedNote === note) {
+            return;
+        }
         $scope.selectedNote = note;
         $rootScope.$broadcast("note-selected", note);
     }
 
     $scope.renderHtml = function (note) {
-
-        return $sce.trustAsHtml(note.markup());
+        return $sce.trustAsHtml(note.markup().replace(/(<([^>]+)>)/ig, ""));
     };
 
     $scope.newNote = function () {
         var note = NoteStore.newNote().then(function (note) {
             refresh();
             $scope.noteSelected(note);
-            $scope.edit();
         });
     }
 
 
-}]);
+}])
+;

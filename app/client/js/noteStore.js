@@ -4,13 +4,16 @@ var PouchDb = require("./vendor/pouchdb-2.2.3.min.js");
 var Utils = require("./js/utils.js");
 var EventEmitter = require('events').EventEmitter;
 var util = require('util');
+var moment = require("./vendor/moment/moment.js");
 
 var Note = function (json) {
+
+    "use strict";
 
     var content = angular.extend({
         title: "",
         markup: "",
-        format: "textile",
+        format: "1",
         created: {
             by: "",
             on: null
@@ -32,35 +35,35 @@ var Note = function (json) {
     }
 
     function title() {
-        if (arguments.length == 0) {
+        if (arguments.length === 0) {
             return content.title;
         }
         content.title = arguments[0];
     }
 
     function markup() {
-        if (arguments.length == 0) {
+        if (arguments.length === 0) {
             return content.markup;
         }
         content.markup = arguments[0];
     }
 
     function format() {
-        if (arguments.length == 0) {
+        if (arguments.length === 0) {
             return content.format;
         }
         content.format = arguments[0];
     }
 
     function tags() {
-        if (arguments.length == 0) {
+        if (arguments.length === 0) {
             return content.tags;
         }
         content.tags = arguments[0];
     }
 
     function id() {
-        if (arguments.length == 0) {
+        if (arguments.length === 0) {
             return content._id;
         }
         if (!angular.isUndefined(content._id) && arguments[0] != content._id) {
@@ -70,7 +73,7 @@ var Note = function (json) {
     }
 
     function createdOn() {
-        return content.created.on;
+        return moment(content.created.on);
     }
 
     function trash() {
@@ -90,7 +93,7 @@ var Note = function (json) {
     }
 
     function revision() {
-        if (arguments.length == 0) {
+        if (arguments.length === 0) {
             return content._rev;
         }
         content._rev = arguments[0];
@@ -113,33 +116,42 @@ var Note = function (json) {
 }
 
 noteStoreServices.factory('NoteStore', ["$q", function ($q) {
-    var db = new PouchDb("quaver");
+    var db = new PouchDb("http://127.0.0.1:5984/quaver");
 
     function NoteStore() {
         EventEmitter.call(this);
     };
     util.inherits(NoteStore, EventEmitter);
 
-    NoteStore.prototype.saveNote = function (note) {
+    NoteStore.prototype.notebooks = function () {
+        var def = $q.defer();
+        def.resolve([
+            {id: "1", name: "Work"},
+            {id: "2", name: "Home"}
+        ]);
+        return def.promise;
+    }
+
+    NoteStore.prototype.saveNote = function (note, triggerEvent) {
+        triggerEvent = triggerEvent || true;
+        var self = this;
         var defered = $q.defer();
         var doc = note.data();
+
+        function onSave(resp) {
+            note.id(resp.id);
+            note.revision(resp.rev);
+            defered.resolve(note);
+            if (triggerEvent) {
+                self.emit("save-note", note);
+            }
+        }
+
         if (angular.isUndefined(note.id())) {
-            db.post(doc)
-                .then(function (resp) {
-                    note.id(resp.id);
-                    note.revision(resp.rev);
-                    defered.resolve(note);
-                    this.emit("save-note", note);
-                });
+            db.post(doc).then(onSave);
         }
         else {
-            db.put(doc)
-                .then(function (resp) {
-                    note.id(resp.id);
-                    note.revision(resp.rev);
-                    defered.resolve(note);
-                    this.emit("save-note", note);
-                });
+            db.put(doc).then(onSave);
         }
         return defered.promise;
     }
@@ -147,7 +159,7 @@ noteStoreServices.factory('NoteStore', ["$q", function ($q) {
     NoteStore.prototype.deleteNote = function (note) {
         note.delete();
         var self = this;
-        return this.saveNote(note)
+        return this.saveNote(note, false)
             .then(function events() {
                 self.emit("delete-note", note);
             });
@@ -157,7 +169,7 @@ noteStoreServices.factory('NoteStore', ["$q", function ($q) {
 
         var defered = $q.defer();
 
-        var live = function (doc, emit) {
+        var live = function (doc) {
             if (!doc.deleted) {
                 emit(doc);
             }
@@ -182,8 +194,10 @@ noteStoreServices.factory('NoteStore', ["$q", function ($q) {
             markup: "A new note.",
             tags: ""
         });
-        this.emit("new-note", note);
-        return this.saveNote(note);
+
+        return this.saveNote(note, false).then(function () {
+            this.emit("new-note", note);
+        });
     }
 
 

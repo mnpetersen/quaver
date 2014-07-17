@@ -1,0 +1,144 @@
+@import "bootstrap.less";
+
+
+html {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+body {
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+}
+
+#layout {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.navbar {
+  border-radius: 0px;
+  border: 0px;
+}
+
+#header {
+  height: 50px;
+  width: 100%;
+}
+
+#content {
+  position: fixed;
+  left: 35px;
+  top: 55px;
+  bottom: 20px;
+  right: 5px;
+  //    background-color: red;
+}
+
+#app-footer {
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  height: 15px;
+  border-top: 1px solid grey;
+}
+
+/*
+ Tabs
+*/
+
+#tab-bar {
+  width: 30px;
+  border-right: 1px solid grey;
+}
+
+.tab-wrapper {
+  /*width: 180px;*/
+}
+
+#tab {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  height: 32px;
+  -webkit-transform-origin: 0 0;
+  transform-origin: 0 0;
+  -webkit-transform: rotate(-90deg) translate(-400px, 0px);
+
+}
+
+#tab li {
+  float: left;
+  width: 100px;
+  height: 30px;
+  border-right: 5px;
+}
+
+#tab li a {
+  display: block;
+  padding: 10px;
+  font-family: Arial, sans-serif;
+  text-decoration: none;
+}
+
+#tab li.selected {
+  background-color: black;
+}
+
+#tab li.selected a {
+  font-weight: bold;
+}
+
+#tab-content {
+  position: fixed;
+  left: 30px;
+  top: 55px;
+  bottom: 20px;
+  /*background-color: blue;*/
+  width: 400px;
+  padding-left: 2px;
+  padding-right: 5px;
+  margin-left: 5px;
+  overflow-y: scroll;
+
+}
+
+.note-summary .panel-body {
+  height: 100px;
+  overflow-y: hidden;
+}
+
+#notesLeftBar {
+  width: 300px;
+  height:100%;
+
+}
+
+#noteList {
+  height:100%;
+  overflow-y: scroll;
+}
+
+#noteEditor {
+  left: 306px;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  position: absolute;
+}
+
+#noteEditor .panel {
+  left: 0px;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  position: absolute;
+  margin-bottom: 0px
+}
+
+
+

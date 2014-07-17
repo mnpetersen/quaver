@@ -9,15 +9,17 @@ require('crash-reporter').start();
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the javascript object is GCed.
 var windows = {
-    mainWindow:null,
-    textileHelp:null,
-    preferences:null
+    mainWindow: null,
+    textileHelp: null,
+    preferences: null
 };
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {
-    if (process.platform != 'darwin')
+    if (process.platform !== 'darwin') {
         app.quit();
+    }
+
 });
 
 var display = screen.getPrimaryDisplay();
@@ -26,15 +28,17 @@ var display = screen.getPrimaryDisplay();
 // initialization and ready for creating browser windows.
 app.on('ready', function () {
     // Create the browser window.
+
     windows.mainWindow = new BrowserWindow({
         width: display.workArea.width,
         height: display.workArea.height,
         "min-width": 768,
-        "min-height": 500
+        "min-height": 500,
+        "icon": "/Users/michaelp/Downloads/canstockphoto18267702/18267702.png"
     });
 
     // and load the index.html of the app.
-    windows.mainWindow.loadUrl('file://' + __dirname + '/client/index.html');
+    windows.mainWindow.loadUrl('file://' + __dirname + '/client/mainPage.html');
 
     // Emitted when the window is closed.
     windows.mainWindow.on('closed', function () {
@@ -46,7 +50,7 @@ app.on('ready', function () {
 
 });
 
-ipc.on('show-textile-help', function(event,arg){
+ipc.on('show-textile-help', function (event, arg) {
     console.log("show-textile-help");
     if (windows.textileHelp == null) {
         windows.textileHelp = new BrowserWindow({

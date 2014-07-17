@@ -1,20 +1,48 @@
-<div id="noteEditor" ng-controller="NoteEditCtrl" ng-show="selectedNote != null">
-
-    <a class="btn btn-warning pull-right"
-       href="#" ng-click="deleteCurrentNote()"><i class="fa fa-trash-o"> Delete</i></a>
-
-    <input class="form-control input-lg"
-           ng-readOnly="selectedNote == null"
-           ng-model="selectedNote.edit.title"
-           ng-change="noteChanged()"
-           style="width:auto; margin-top: 0px; margin-bottom: 2px; border:0px"/>
-
-
+<div id="notesLeftBar" ng-controller="NoteListCtrl">
+    <div id="notebookSelector">
+        <select class="form-control" ng-model="selectedNotebook"
+                ng-options="notebook.name for notebook in notebooks track by notebook.id">
+            <option value="">All Notes</option>
+        </select>
+    </div>
     <p/>
 
-    <textarea id="editor" style="width: 100%; height: 100%">
+    <div id="noteList">
+        <div class="note-summary panel panel-default {{note.id() == selectedNote.id() ? 'panel-primary' : ''}}"
+             ng-repeat="note in notes" ng-click="noteSelected(note)">
+            <div class="panel-heading ">
+                <h3 class="panel-title">{{note.title()}}</h3>
+                {{note.createdOn().calendar()}}
+            </div>
+            <div class="panel-body" ng-bind-html="renderHtml(note)">
 
-    </textarea>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="noteEditor" ng-controller="NoteEditCtrl" ng-show="selectedNote != null">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+
+            <input class="noteTitle form-control input-lg"
+                   ng-readOnly="selectedNote == null"
+                   ng-model="selectedNote.edit.title"
+                   ng-change="noteChanged()"
+                   style="border:0px; margin-bottom: 5px;"
+                    />
+
+            <div id="editorToolbar" style="width:100%" ng-show="toolbarVisible"></div>
+            <div id="noteMetaData" style="width:100%" ng-show="!toolbarVisible">
+
+            </div>
+
+        </div>
+        <div class="panel-body">
+            <div id="editor" contenteditable="true">
+            </div>
+        </div>
+    </div>
 
 
 </div>

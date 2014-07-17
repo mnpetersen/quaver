@@ -7,8 +7,3 @@
         </li>
     </ul>
 </div>
-<div id="tab-content" ng-show="isLeftBarExpanded()">
-    <div ng-repeat="tab in leftTabs" id="tab-{{tab.id}}" ng-show="isSelectedLeft(tab)">
-        <div ng-include="tab.include"></div>
-    </div>
-</div>
